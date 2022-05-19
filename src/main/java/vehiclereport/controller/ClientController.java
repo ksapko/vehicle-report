@@ -1,6 +1,8 @@
 package vehiclereport.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vehiclereport.model.Client;
 import vehiclereport.model.dto.ClientDTO;
@@ -25,28 +27,33 @@ public class ClientController {
     }
 
     @PostMapping("/clients")
-    public Client createClient(@RequestBody ClientDTO clientDTO) {
-        return clientService.createClient(new Client(
+    public ResponseEntity<Client> createClient(@RequestBody ClientDTO clientDTO) {
+        Client client = clientService.createClient(new Client(
                 0,
                 clientDTO.getFirstName(),
                 clientDTO.getLastName(),
                 clientDTO.getEmail()
         ));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(client);
     }
 
+
     @PutMapping("/client/{id}")
-    public Client editClientById(@PathVariable int id, @RequestBody ClientDTO clientDTO) {
-        return clientService.editClientById(new Client(
+    public ResponseEntity<Object> editClientById(@PathVariable int id, @RequestBody ClientDTO clientDTO) {
+        clientService.editClientById(new Client(
                 id,
                 clientDTO.getFirstName(),
                 clientDTO.getLastName(),
                 clientDTO.getEmail()
         ));
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/clients/{id}")
-    public void deleteClientById(@PathVariable int id) {
+    public ResponseEntity<Object> deleteClientById(@PathVariable int id) {
         clientService.deleteClientById(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

@@ -1,6 +1,8 @@
 package vehiclereport.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vehiclereport.model.Vehicle;
 import vehiclereport.model.dto.VehicleDTO;
@@ -25,8 +27,8 @@ public class VehicleController {
     }
 
     @PostMapping("/vehicles")
-    public Vehicle createVehicle(@RequestBody VehicleDTO vehicleDTO) {
-        return vehicleService.createVehicle(new Vehicle(
+    public ResponseEntity<Vehicle> createVehicle(@RequestBody VehicleDTO vehicleDTO) {
+        Vehicle vehicle = vehicleService.createVehicle(new Vehicle(
                 0,
                 vehicleDTO.getBrand(),
                 vehicleDTO.getModel(),
@@ -34,11 +36,13 @@ public class VehicleController {
                 vehicleDTO.getProductionYear(),
                 vehicleDTO.getFuelType()
         ));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(vehicle);
     }
 
     @PutMapping("/vehicles/{id}")
-    public Vehicle editVehicleById(@PathVariable int id, @RequestBody VehicleDTO vehicleDTO) {
-        return vehicleService.editVehicle(new Vehicle(
+    public ResponseEntity<Object> editVehicleById(@PathVariable int id, @RequestBody VehicleDTO vehicleDTO) {
+        vehicleService.editVehicle(new Vehicle(
                 id,
                 vehicleDTO.getBrand(),
                 vehicleDTO.getModel(),
@@ -46,10 +50,12 @@ public class VehicleController {
                 vehicleDTO.getProductionYear(),
                 vehicleDTO.getFuelType()
         ));
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/vehicles/{id}")
-    public void deleteVehicleById(@PathVariable int id) {
+    public ResponseEntity<Object> deleteVehicleById(@PathVariable int id) {
         vehicleService.deleteVehicleById(id);
+        return ResponseEntity.noContent().build();
     }
 }
