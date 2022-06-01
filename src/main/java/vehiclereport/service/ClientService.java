@@ -33,4 +33,5 @@ public class ClientService {
     public void deleteClientById(int id) {
         clientRepository.deleteById(id);
     }
+
 }

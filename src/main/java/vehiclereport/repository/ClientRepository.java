@@ -6,4 +6,5 @@ import vehiclereport.model.Client;
 
 @Repository
 public interface ClientRepository extends JpaRepository<Client,Integer> {
+
 }

@@ -1,11 +1,10 @@
 package vehiclereport.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,4 +19,8 @@ public class Client {
     private String firstName;
     private String lastName;
     private String email;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "client")
+    private List<Vehicle> vehicles;
 }

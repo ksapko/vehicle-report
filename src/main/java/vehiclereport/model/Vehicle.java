@@ -2,15 +2,12 @@ package vehiclereport.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode
 @Entity
 public class Vehicle {
@@ -22,4 +19,10 @@ public class Vehicle {
     private String color;
     private int productionYear;
     private String fuelType;
+
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "client_id")
+    private Client client;
+
 }
