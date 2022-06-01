@@ -1,9 +1,9 @@
 package vehiclereport.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vehiclereport.model.Vehicle;
-import vehiclereport.model.dto.VehicleDTO;
 import vehiclereport.service.VehicleService;
 
 import java.util.List;
@@ -25,27 +25,13 @@ public class VehicleController {
     }
 
     @PostMapping("/vehicles")
-    public Vehicle createVehicle(@RequestBody VehicleDTO vehicleDTO) {
-        return vehicleService.createVehicle(new Vehicle(
-                0,
-                vehicleDTO.getBrand(),
-                vehicleDTO.getModel(),
-                vehicleDTO.getColor(),
-                vehicleDTO.getProductionYear(),
-                vehicleDTO.getFuelType()
-        ));
+    public Vehicle createVehicle(@RequestBody Vehicle vehicle) {
+        return vehicleService.createVehicle(vehicle);
     }
 
     @PutMapping("/vehicles/{id}")
-    public Vehicle editVehicleById(@PathVariable int id, @RequestBody VehicleDTO vehicleDTO) {
-        return vehicleService.editVehicle(new Vehicle(
-                id,
-                vehicleDTO.getBrand(),
-                vehicleDTO.getModel(),
-                vehicleDTO.getColor(),
-                vehicleDTO.getProductionYear(),
-                vehicleDTO.getFuelType()
-        ));
+    public Vehicle editVehicleById(@PathVariable int id, @RequestBody Vehicle vehicle1) {
+        return vehicleService.editVehicle(vehicle1);
     }
 
     @DeleteMapping("/vehicles/{id}")
